@@ -8,6 +8,11 @@
 import SwiftUI
 import SwiftData
 
+/**
+ App: Main place where the application bootup code takes place:
+    The environment is prepared. Shared objects are instantiated and declared.
+    SwiftData/CloudKit instantiation. Model migrations should happen here.
+ */
 @main
 struct IbonApp: App {
     var sharedModelContainer: ModelContainer = {
@@ -22,11 +27,14 @@ struct IbonApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    var navigationState: NavigationState = .init()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ViewRouter()
         }
         .modelContainer(sharedModelContainer)
+        .environmentObject(navigationState)
     }
 }
